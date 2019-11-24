@@ -101,6 +101,49 @@ class TestListas extends FunSuite {
   }
 
 
+  test("Listas de enteros a string")
+  {
+     val lista1 = List(1,2)
+     val lista2 = lista1.map( x => x.toString)
+      lista2 should be(List("1","2"))
+  }
+
+
+  test("validar numero primo")
+  {
+    val numero1  = 23
+    val resultado = validarSiEsPrimo(numero1)
+    true  should not be resultado
+  }
+
+
+  test("validar numero primo 2")
+  {
+    val numero1  = 24
+    val resultado = validarSiEsPrimo(numero1)
+    false  should be (resultado)
+  }
+
+
+
+  def obtenerNumeroDeFibonacci(indice:Int): Int = {
+    val listaInicial = List(0,1)
+    val numeroSiguiente = List.range(1,indice-2).flatMap(x=> listaInicial.sum::listaInicial)
+    numeroSiguiente(0)
+  }
+
+
+
+  def validarSiEsPrimo(numeroAEvaluar:Int): Boolean =
+  {
+    val listaDeDivisores = List.range(1,numeroAEvaluar+1).map(x=>numeroAEvaluar%x == 0).fold(false)((act,acc) => act || act )
+    return listaDeDivisores;
+  }
+
+
+
+
+
 
 
 
