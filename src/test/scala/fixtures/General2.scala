@@ -111,6 +111,11 @@ class TestFixtureWithTraitSpec extends FlatSpec with ScalaFutures with Matchers 
     val factory = new ChocolateFactory(printer)
   }
 
+  trait TestApp2{
+    println("Ejecutando segundo fixture")
+    val julian = "Soy una nota"
+  }
+
   it should "produce small chocolate" in new TestApp {
 
     println("test1 trait")
@@ -130,11 +135,16 @@ class TestFixtureWithTraitSpec extends FlatSpec with ScalaFutures with Matchers 
   it should "third" in{
     println("test 3 trait")
   }
+
+  it should "fourth" in new TestApp with TestApp2 {
+    println("test 4 trait")
+    println(julian)
+  }
 }
 
 
 /*
-funciona igual que usando fixtures puros, es necesario en todos los tests usar el fixture creado como  función.
+funciona igual que usando traits, con la limitante que no se pueden usar varias implementaciones o varios métodos en un solo test
  */
 
 class TestFixtureWithFunctions extends FlatSpec with ScalaFutures with Matchers {
@@ -142,15 +152,16 @@ class TestFixtureWithFunctions extends FlatSpec with ScalaFutures with Matchers 
 
   type Fixture = (AdServiceMock, ChocolateFactory)
 
-  def testApp(slogan: String = "Best best best!")(test: Fixture => Unit): Unit = {
+  def testApp(slogan: String = "Best best best!")(test: Fixture => Any): String = {
     println("ejecutando fixtures")
     val adService = new AdServiceMock(slogan)
     val printer = new PackagingPrinter(adService)
     val factory = new ChocolateFactory(printer)
     test((adService, factory))
+    "Algún retorno, probablemente no necesario."
   }
 
-  it should "produce small chocolate" in testApp() { fixture =>
+   it should "produce small chocolate" in testApp() { fixture =>
 
     println("test1 functions")
     // Given
@@ -163,10 +174,17 @@ class TestFixtureWithFunctions extends FlatSpec with ScalaFutures with Matchers 
     chocolate.bar shouldBe ChocolateBar(3, 3)
     chocolate.packaging.label should include(adService.slogan)
     chocolate.packaging.label should include("9 cubes")
+
   }
 
   it should "second test" in testApp(){ fixture =>
     println("test2 functions")
+
+  }
+
+  it should "third test" in {
+    println("test 3 functions")
+
   }
 }
 
