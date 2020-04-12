@@ -36,7 +36,23 @@ class TestListas extends FunSuite {
         case _ => "No aplica"
       }
     })
-    assertResult(List("uno","dos","tres")){listaMap}
+    assertResult(List("uno","dos","tres"))(listaMap)
+  }
+
+  test("Nil"){
+    val list = Nil
+    val result = list.map(_.toString)
+
+    val optionList = Option(Nil)
+
+    val list2 = List.empty
+    val result2 = list2.map(_.toString)
+
+    assertResult(result)(Nil)
+    assertResult(result2)(Nil)
+    assertResult(result)(result2)
+    assertResult(result)(List.empty)
+    assertResult(optionList)(Some(Nil))
   }
 
   test("test listas map con {")
