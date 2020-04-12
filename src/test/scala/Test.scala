@@ -22,4 +22,14 @@ class Test extends FunSuite{
     "S4N" should be(persona.empresa.razonSocial)
   }
 
+
+  test("try key word"){
+    try {
+      throw new Error("Hi!!")
+    }
+    finally {
+      println("all good here")
+    }
+  }
+
 }

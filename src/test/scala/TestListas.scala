@@ -124,12 +124,26 @@ class TestListas extends FunSuite {
     false  should be (resultado)
   }
 
+  test("validar serie  5ta  posición")
+  {
+    val i = 5
+    val resultado = obtenerNumeroDeFibonacci(i)
+    resultado should be (3)
+  }
+
+
+
 
 
   def obtenerNumeroDeFibonacci(indice:Int): Int = {
-    val listaInicial = List(0,1)
-    val numeroSiguiente = List.range(1,indice-2).flatMap(x=> listaInicial.sum::listaInicial)
-    numeroSiguiente(0)
+    var listaInicial = (List(0,1),1)
+    val numeroSiguiente = List.range(1,indice-2).map(x=> {
+      val lista = (listaInicial._1:::List(listaInicial._1.sum)).tail
+      listaInicial = (lista,lista.sum)
+      listaInicial
+    })
+    print(numeroSiguiente)
+    numeroSiguiente.head._2
   }
 
 
