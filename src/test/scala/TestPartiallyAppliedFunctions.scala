@@ -334,6 +334,7 @@ class TestPartiallyAppliedFunctions extends FunSuite{
     seco shouldBe(secoEsperado)
 
 
+
   }
 
 
