@@ -9,3 +9,6 @@ libraryDependencies ++= Seq("org.scalatest" %% "scalatest" % "3.0.5" % "test",
 "info.cukes" % "cucumber-java8" % "1.2.5" % "test",
 "info.cukes" % "cucumber-junit" % "1.2.5" % "test",
 "info.cukes" % "cucumber-picocontainer" % "1.2.5" % "test")
+
+testOptions += Tests.Argument("-n", "fgsf")
+

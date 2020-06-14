@@ -1,4 +1,4 @@
-import org.scalatest.FunSuite
+import org.scalatest.{FunSuite, Tag}
 import org.scalatest.Matchers._
 
 import scala.collection.immutable
@@ -333,12 +333,61 @@ class TestPartiallyAppliedFunctions extends FunSuite{
 
     seco shouldBe(secoEsperado)
 
+  }
 
+  def multiplicacion(numero1:Int,numero2:Int):Option[Int] = Option(numero1*numero2)
+  def multiplicacion2(numero1:Int,numero2:Int):Option[Int] = Option(numero1*numero2)
+  def multiplicacion3(numero1:Int,numero2:Int):Option[Int] = Option(numero1*numero2)
+  def multiplicacion4(numero1:Int,numero2:Int):Option[Int] = Option(numero1*numero2)
+
+
+  def mensaje(numoer:Int):String = "El resultado de la multiplicación es: "+numoer
+
+
+  test("for comph"){
+
+    val respuesta = for {
+      x <- multiplicacion(2,3)
+      y <- multiplicacion2(x,3)
+      z <- multiplicacion3(y,4)
+      a <- multiplicacion4(z,5)
+    } yield a
+
+    val respuestaFlatMap = multiplicacion(2,3).flatMap(x=> multiplicacion2(x,3).flatMap(y=> multiplicacion3(y,4).flatMap(z=> multiplicacion4(z,5))))
+
+    println(respuesta)
+    respuesta shouldBe(respuestaFlatMap)
+
+
+
+    case class User(name: String, age: Int)
+
+    val userBase = List(
+      User("Travis", 28),
+      User("Kelly", 33),
+      User("Jennifer", 44),
+      User("Dennis", 23))
+
+
+    val exampple2 = userBase.collect{case usr if usr.age>=20 && usr.age<30 => usr.name}
+    val twentySomethings =
+      for (user <- userBase if user.age >=20 && user.age < 30)
+        yield user.name  // i.e. add this to a list
+
+    exampple2 shouldBe(twentySomethings)
+
+    twentySomethings.foreach(name => println(name))
 
   }
 
 
+  object DatabaseTest extends Tag("DatabaseTest")
 
+
+  test("Tagssss....", DatabaseTest) {
+    println("Hola!!!")
+
+  }
 
 
 }
